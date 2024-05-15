@@ -1,0 +1,45 @@
+{
+  "name": "i18n Testing __",
+  "date": "2024-05-15T21:54:47.038Z",
+  "version": "1.0.0",
+  "results": [
+    {
+      "name": "sprintf Typed",
+      "ops": 3143360,
+      "margin": 1.39,
+      "percentSlower": 30.76
+    },
+    {
+      "name": "sprintf Js",
+      "ops": 2069767,
+      "margin": 1.34,
+      "percentSlower": 54.41
+    },
+    {
+      "name": "tannin Sprintf",
+      "ops": 1219255,
+      "margin": 0.84,
+      "percentSlower": 73.14
+    },
+    {
+      "name": "extsprintf",
+      "ops": 840949,
+      "margin": 3.62,
+      "percentSlower": 81.48
+    },
+    {
+      "name": "fastPrintf",
+      "ops": 4539755,
+      "margin": 1.21,
+      "percentSlower": 0
+    }
+  ],
+  "fastest": {
+    "name": "fastPrintf",
+    "index": 4
+  },
+  "slowest": {
+    "name": "extsprintf",
+    "index": 3
+  }
+}

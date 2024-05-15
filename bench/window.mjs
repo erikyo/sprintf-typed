@@ -12,9 +12,7 @@ import { printf as fastPrintf } from "fast-printf";
 import { sprintf as sprintfJs } from "sprintf-js";
 import { sprintf as sprintfTyped } from "sprintf-typed";
 
-const window = {
-	test: true,
-};
+global.window = Object.create({ test: true });
 
 if (typeof window !== "undefined") {
 	console.log("Testing window performance");

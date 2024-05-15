@@ -1,0 +1,45 @@
+{
+  "name": "window",
+  "date": "2024-05-15T22:31:00.311Z",
+  "version": "1.0.0",
+  "results": [
+    {
+      "name": "sprintf Typed",
+      "ops": 1193563,
+      "margin": 0.85,
+      "percentSlower": 0
+    },
+    {
+      "name": "fastPrintf",
+      "ops": 453489,
+      "margin": 9.34,
+      "percentSlower": 62.01
+    },
+    {
+      "name": "tannin Sprintf",
+      "ops": 945443,
+      "margin": 0.61,
+      "percentSlower": 20.79
+    },
+    {
+      "name": "extsprintf",
+      "ops": 568252,
+      "margin": 7.73,
+      "percentSlower": 52.39
+    },
+    {
+      "name": "sprintf Js",
+      "ops": 277845,
+      "margin": 18.73,
+      "percentSlower": 76.72
+    }
+  ],
+  "fastest": {
+    "name": "sprintf Typed",
+    "index": 0
+  },
+  "slowest": {
+    "name": "sprintf Js",
+    "index": 4
+  }
+}
