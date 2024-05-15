@@ -1,11 +1,11 @@
 {
 	"$schema": "https://json.schemastore.org/tsconfig.json",
 	"compilerOptions": {
-		"lib": ["DOM", "DOM.Iterable", "ES2022"],
+		"lib": ["DOM", "DOM.Iterable", "ES2021"],
 		"allowJs": true,
 		"checkJs": true,
-		"target": "ES2022",
-		"module": "ES2022",
+		"target": "ES2021",
+		"module": "ES6",
 		"moduleResolution": "Node",
 		"baseUrl": "./src"
 	},

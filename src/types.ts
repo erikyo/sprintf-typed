@@ -2,9 +2,10 @@ type Specifiers = {
 	s: string;
 	d: number;
 	b: boolean;
+	"%": string;
 	D: Date;
 };
-type S = keyof Specifiers;
+export type S = keyof Specifiers;
 
 type ExtractNamedPlaceholders<T extends string> =
 	T extends `${string}%(${infer Key})${infer Spec}${infer Rest}`

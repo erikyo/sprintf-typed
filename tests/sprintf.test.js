@@ -5,16 +5,14 @@ import sprintf from "../dist/index.js";
 
 describe("tests sprintf types", () => {
 	it("should work", () => {
-		const p = process;
-		// biome-ignore lint/suspicious/noGlobalAssign: <testing purposes>
-		process = undefined;
-		console.log(sprintf("Hello %s %d", "Erik", 404));
+		const window = {
+			test: true,
+		};
+		console.log(sprintf("Hello %s %d", "Erik", 404.123));
 		assert(
-			sprintf("Hello %s %d", "Erik", 404) === "Hello Erik 404",
+			sprintf("Hello %s %d", "Erik", 404.123) === "Hello Erik 404",
 			"Hello Erik 404",
 		);
-		// biome-ignore lint/suspicious/noGlobalAssign: <testing purposes>
-		process = p;
 	});
 });
 
