@@ -1,29 +1,7 @@
+// node internal library
 import * as util from "node:util";
-type Specifiers = {
-	s: string;
-	d: number;
-	b: boolean;
-	D: Date;
-};
-type S = keyof Specifiers;
-
-type ExtractNamedPlaceholders<T extends string> =
-	T extends `${string}%(${infer Key})${infer Spec}${infer Rest}`
-		? Spec extends S
-			? { [K in Key]: Specifiers[Spec] } & ExtractNamedPlaceholders<Rest>
-			: never
-		: Record<string, unknown>;
-
-type ExtractUnnamedPlaceholders<T extends string> =
-	T extends `${string}%${infer Spec}${infer Rest}`
-		? Spec extends S
-			? [Specifiers[Spec], ...ExtractUnnamedPlaceholders<Rest>]
-			: never
-		: [];
-
-type SprintfArgs<T extends string> = ExtractUnnamedPlaceholders<T> extends never
-	? [values: ExtractNamedPlaceholders<T>]
-	: ExtractUnnamedPlaceholders<T>;
+// types
+import type { SprintfArgs } from "./types";
 
 /**
  * The sprintf function
@@ -31,16 +9,12 @@ type SprintfArgs<T extends string> = ExtractUnnamedPlaceholders<T> extends never
  * @param format
  * @param args
  */
-export default function sprintf<T extends string>(
+export function sprintf<T extends string>(
 	format: T,
 	...args: SprintfArgs<T>
 ): string {
 	let index = 0;
-	if (
-		typeof process !== "undefined" &&
-		process.versions &&
-		process.versions.node
-	) {
+	if (typeof process !== "undefined") {
 		return util.format(format, ...args);
 	}
 
@@ -48,60 +22,31 @@ export default function sprintf<T extends string>(
 	 * The format specifier
 	 *
 	 * @param match
-	 * @param a
+	 * @param flag
+	 * @param width
 	 */
-	const formatSpecifier = (match: string, ...a: unknown[]): string => {
-		// @ts-ignore
-		const { flag, width, precision, type } = a;
-		let value: unknown;
+	const formatSpecifier = (
+		match: string,
+		flag: string,
+		width?: number,
+	): string => {
+		const value: unknown = args[index++];
 
-		if (type === "%") {
-			return "%";
-		}
-
-		// Get the argument to format
-		if (index < args.length) {
-			value = args[index++];
-		} else {
-			return "";
-		}
-
-		switch (type) {
-			case "(":
-				value = String(value);
-				break;
+		switch (flag) {
 			case "s":
-				value = String(value);
-				break;
+				return String(value);
+			case "D":
+				return new Date(String(value)).toISOString();
 			case "d":
-				value = Number.parseInt(value as string, 10);
-				break;
+				return Number.parseInt(value as string, 10).toString();
 			case "f":
-				value = Number.parseFloat(value as string);
-				if (precision !== undefined) {
-					value = (value as number).toFixed(precision);
-				}
-				break;
+				return Number.parseFloat(value as string).toString();
 			default:
-				return match;
+				if (match) return match;
 		}
-
-		// Apply width padding
-		if (width !== undefined) {
-			const paddingChar: string = flag === "0" ? "0" : " ";
-			value = String(value);
-			const padLength = width - (value as string).length;
-			if (padLength > 0) {
-				const padding = paddingChar.repeat(padLength);
-				value = flag === "-" ? value + padding : padding + value;
-			}
-		}
-
-		return value as string;
 	};
 
-	return format.replace(
-		/%([-+0#]*)(\d+)?(?:\.(\d+))?([sd%f])/g,
-		formatSpecifier,
-	);
+	return format.replaceAll(/%([sfdD]|%\([^)]*\))/g, formatSpecifier);
 }
+
+export default sprintf;

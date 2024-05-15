@@ -5,12 +5,24 @@ import sprintf from "../dist/index.js";
 
 describe("tests sprintf types", () => {
 	it("should work", () => {
-		console.log();
-		assert(sprintf("Hello %s", "Erik") === "Hello Erik", "yup");
+		const p = process;
+		// biome-ignore lint/suspicious/noGlobalAssign: <testing purposes>
+		process = undefined;
+		console.log(sprintf("Hello %s %d", "Erik", 404));
+		assert(
+			sprintf("Hello %s %d", "Erik", 404) === "Hello Erik 404",
+			"Hello Erik 404",
+		);
+		// biome-ignore lint/suspicious/noGlobalAssign: <testing purposes>
+		process = p;
 	});
+});
+
+describe("tests sprintf", () => {
 	it("it works as expected", () => {
+		assert(sprintf("Hello %s", "Erik") === "Hello Erik", "Hello Erik");
 		sprintf(
-			"this is a %s and it is %b years old, right?%d %D",
+			"this is a %s and it has %d cats, right?%b %D",
 			"erik",
 			20,
 			true,

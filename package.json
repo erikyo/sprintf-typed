@@ -29,9 +29,8 @@
 		"typescript": "^5.4.5"
 	},
 	"tsup": {
-		"skipNodeModulesBundle": true,
 		"dts": true,
-		"bundle": false,
+		"bundle": true,
 		"treeshake": true,
 		"minify": true,
 		"clean": true,
